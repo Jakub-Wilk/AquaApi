@@ -12,6 +12,7 @@ class ParamParser:
                 self.response = missing_parameter(param)
                 return
             else:
+                self.correct = True
                 self.params[param] = request.get(param)
         
     def get(self, param):
