@@ -98,3 +98,47 @@ def register_user():
     auth_token = generate_jwt_token(username)
 
     return success(auth_token)
+
+@app.route("/register/device", methods=["POST"])
+def register_device():
+    possible_devices = ["washing_machine", "sink", "bathtub", "shower", "dishwasher", "toilet", "hose"]
+
+    required_params = ["mac", "name", "household", "type"]
+
+    params = ParamParser(required_params, request.get_json())
+    if not params.correct:
+        return params.response
+
+    mac_address = params.get("mac")
+    name = params.get("name")
+    household = params.get("household")
+    device_type = params.get("type")
+
+    if device_type not in possible_devices:
+        return not_found("device type", device_type)
+
+    household_data = mongo.db.households.find_one({"name": household})
+    device_data = mongo.db.users.find_one({"mac": mac_address})
+    if not household_data:
+        return not_found("household", household)
+    if device_data:
+        return conflict("mac adress", mac_address)
+
+    mongo.db.households.update_one(
+        {"name": household},
+        {"$push": 
+            {"devices": mac_address}
+        }
+    )
+
+    mongo.db.devices.insert_one(
+        {
+            "mac": mac_address,
+            "name": name,
+            "household": household,
+            "type": device_type,
+            "water_data": []
+        }
+    )
+    return success()
+
