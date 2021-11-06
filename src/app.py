@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_pymongo import PyMongo
 import jwt
 import datetime
+import bcrypt
 from . import env
 from .responses import success, conflict, not_found
 from .parsers import ParamParser
@@ -56,3 +57,44 @@ def register_household():
     )
     return success()
 
+@app.route("/register/user", methods=["POST"])
+def register_user():
+    required_params = ["username", "password", "household"]
+
+    params = ParamParser(required_params, request.get_json()
+)
+    if not params.correct:
+        return params.response
+
+    username = params.get("username")
+    password = params.get("password")
+    household = params.get("household")
+
+    password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+
+    household_data = mongo.db.households.find_one({"name": household})
+    user_data = mongo.db.users.find_one({"username": username})
+    if not household_data:
+        return not_found("household", household)
+    if user_data:
+        return conflict("user", username)
+
+    mongo.db.households.update_one(
+        {"name": household},
+        {"$push":
+            {"users": username}
+        }
+    )
+    mongo.db.users.insert_one(
+        {
+            "username": username,
+            "password": password,
+            "household": household,
+            "droplets": 0,
+            "active_tasks": []
+        }
+    )
+
+    auth_token = generate_jwt_token(username)
+
+    return success(auth_token)
