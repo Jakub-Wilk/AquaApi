@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_pymongo import PyMongo
 from . import env
 from .views import login, register, token
 from .database import mongo
