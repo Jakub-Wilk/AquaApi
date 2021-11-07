@@ -1,8 +1,9 @@
 from flask import Blueprint, request
 import bcrypt
+import random
 from ..parsers import ParamParser
 from ..responses import success, conflict, not_found
-from ..helpers import generate_auth_token, generate_refresh_token
+from ..helpers import generate_auth_token, generate_refresh_token, generate_mock_tasks
 from ..database import mongo
 
 register_bp = Blueprint("register", __name__)
@@ -25,7 +26,8 @@ def register_household():
         {
             "name": name,
             "users": [],
-            "devices": []
+            "devices": [],
+            "daily_average": random.randint(300, 800)
         }
     )
     return success()
@@ -64,14 +66,14 @@ def register_user():
             "password": password,
             "household": household,
             "droplets": 0,
-            "active_tasks": []
+            "active_tasks": generate_mock_tasks() # In the real app new tasks are generated every day
         }
     )
 
-    auth_token = generate_auth_token(username)
-    refresh_token = generate_refresh_token(username)
+    # auth_token = generate_auth_token(username)
+    # refresh_token = generate_refresh_token(username)
 
-    return success(None, auth_token, refresh_token)
+    return success() # None, auth_token, refresh_token)
 
 @register_bp.route("/device", methods=["POST"])
 def register_device():
@@ -111,7 +113,7 @@ def register_device():
             "name": name,
             "household": household,
             "type": device_type,
-            "water_data": []
+            "water_data": [] 
         }
     )
     return success()

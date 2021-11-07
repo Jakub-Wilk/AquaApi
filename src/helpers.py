@@ -1,6 +1,7 @@
 import jwt
 import datetime
 from . import env
+from .database import mongo
 
 # Auth
 
@@ -48,3 +49,63 @@ def check_auth(headers):
     if not token_user:
         return False
     return token_user
+
+# Tasks
+
+def generate_mock_tasks():
+    # Tasks are generated based on user's history in the real app
+    return [
+        {
+            "name": "Weź prysznic zamiast kąpieli",
+            "type": "shower",
+            "reward": 40
+        },
+        {
+            "name": "Umyj zęby z zakręconym kranem",
+            "type": "teeth",
+            "reward": 10
+        },
+        {
+            "name": "Umyj naczynia gdy zmywarka będzie pełna",
+            "type": "dishes",
+            "reward": 20
+        },
+        {
+            "name": "Nie jedz mięsa",
+            "type": "meat",
+            "reward": 50
+        }
+    ]
+
+def get_mock_water_data():
+    # In the real app this data is fetched from water meters on individual devices
+    return [
+        {
+            "time": 1636254060,
+            "volume": 20
+        },
+        {
+            "time": 1636255030,
+            "volume": 40,
+        },
+        {
+            "time": 1636256260,
+            "volume": 16
+        },
+        {
+            "time": 1636257860,
+            "volume": 53
+        },
+        {
+            "time": 1636259000,
+            "volume": 24
+        },
+        {
+            "time": 1636259560,
+            "volume": 37
+        },
+        {
+            "time": 1636261265,
+            "volume": 28
+        }
+    ]

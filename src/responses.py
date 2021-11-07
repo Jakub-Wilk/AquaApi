@@ -1,8 +1,8 @@
 from flask import Response
 import json
 
-def payload(status, message, data=None, auth_token=None, refresh_token=None):
-    return {"status": status, "message": message, "data": data, "auth_token": auth_token, "refresh_token": refresh_token}
+def payload(status, message, data=None): #, auth_token=None, refresh_token=None):
+    return {"status": status, "message": message, "data": data} #, "auth_token": auth_token, "refresh_token": refresh_token}
 
 def response(code, payload):
     return Response(json.dumps(payload), status=code, mimetype="application/json")
@@ -22,4 +22,4 @@ def unauthorized(message):
 def success(data=None, auth_token=None, refresh_token=None):
     if data and type(data) is dict and "_id" in data.keys():
         data["_id"] = str(data["_id"])
-    return response(200, payload("success", "👌", data, auth_token, refresh_token))
+    return response(200, payload("success", "👌", data)) #, auth_token, refresh_token))

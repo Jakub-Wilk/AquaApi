@@ -11,6 +11,7 @@ Flask-PyMongo = "^2.3.0"
 PyJWT = "^2.3.0"
 dnspython = "^2.1.0"
 bcrypt = "^3.2.0"
+Flask-Cors = "^3.0.10"
 
 [tool.poetry.dev-dependencies]
 

@@ -78,6 +78,18 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "flask-cors"
+version = "3.0.10"
+description = "A Flask extension adding a decorator for CORS support"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Flask = ">=0.9"
+Six = "*"
+
+[[package]]
 name = "flask-pymongo"
 version = "2.3.0"
 description = "PyMongo support for Flask applications"
@@ -181,7 +193,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "2ec225522c7b19dd45f38ac85a9b813a7f0693bc68baddf697f19416380bc15c"
+content-hash = "b8dcb74ec2fb0843547f88e47f0bc292caf598f84e6fadae14a4389164c5f1f6"
 
 [metadata.files]
 bcrypt = [
@@ -260,6 +272,10 @@ dnspython = [
 flask = [
     {file = "Flask-2.0.2-py3-none-any.whl", hash = "sha256:cb90f62f1d8e4dc4621f52106613488b5ba826b2e1e10a33eac92f723093ab6a"},
     {file = "Flask-2.0.2.tar.gz", hash = "sha256:7b2fb8e934ddd50731893bdcdb00fc8c0315916f9fcd50d22c7cc1a95ab634e2"},
+]
+flask-cors = [
+    {file = "Flask-Cors-3.0.10.tar.gz", hash = "sha256:b60839393f3b84a0f3746f6cdca56c1ad7426aa738b70d6c61375857823181de"},
+    {file = "Flask_Cors-3.0.10-py2.py3-none-any.whl", hash = "sha256:74efc975af1194fc7891ff5cd85b0f7478be4f7f59fe158102e91abb72bb4438"},
 ]
 flask-pymongo = [
     {file = "Flask-PyMongo-2.3.0.tar.gz", hash = "sha256:620eb02dc8808a5fcb90f26cab6cba9d6bf497b15032ae3ca99df80366e33314"},
