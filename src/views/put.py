@@ -35,7 +35,7 @@ def finish_task():
     if value == 0:
         return not_found("task", task_type)
     
-    mongo.db.users.update_one({"username": username}, {"$inc": {"droplets": value}, "$pull": {"active_tasks": {"type": task_type}}})
+    mongo.db.users.update_one({"username": username, "active_tasks": {"$elemMatch": {"type": task_type}}}, {"$inc": {"droplets": value}, "$set": {"active_tasks.$.completed": True}})
 
     return success()
     

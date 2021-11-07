@@ -58,22 +58,26 @@ def generate_mock_tasks():
         {
             "name": "Weź prysznic zamiast kąpieli",
             "type": "shower",
-            "reward": 40
+            "reward": 40,
+            "completed": False
         },
         {
             "name": "Umyj zęby z zakręconym kranem",
             "type": "teeth",
-            "reward": 10
+            "reward": 10,
+            "completed": False
         },
         {
             "name": "Umyj naczynia gdy zmywarka będzie pełna",
             "type": "dishes",
-            "reward": 20
+            "reward": 20,
+            "completed": False
         },
         {
             "name": "Nie jedz mięsa",
             "type": "meat",
-            "reward": 50
+            "reward": 50,
+            "completed": False
         }
     ]
 
