@@ -30,12 +30,16 @@ def finish_task():
     for task in user_data["active_tasks"]:
         if task["type"] == task_type:
             value = task["reward"]
+            completed = task["completed"]
             break
     
     if value == 0:
         return not_found("task", task_type)
+
+    if completed:
+        value = -value
     
-    mongo.db.users.update_one({"username": username, "active_tasks": {"$elemMatch": {"type": task_type}}}, {"$inc": {"droplets": value}, "$set": {"active_tasks.$.completed": True}})
+    mongo.db.users.update_one({"username": username, "active_tasks": {"$elemMatch": {"type": task_type}}}, {"$inc": {"droplets": value}, "$set": {"active_tasks.$.completed": not completed}})
 
     return success()
     
