@@ -71,7 +71,7 @@ def register_user():
     auth_token = generate_auth_token(username)
     refresh_token = generate_refresh_token(username)
 
-    return success(auth_token, refresh_token)
+    return success(None, auth_token, refresh_token)
 
 @register_bp.route("/device", methods=["POST"])
 def register_device():

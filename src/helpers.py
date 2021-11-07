@@ -28,11 +28,10 @@ def validate_jwt_token(jwt_token):
         return payload["sub"]
     except jwt.ExpiredSignatureError:
         return False
-    except jwt.InvalidTokenError as ms:
-        print(ms)
+    except jwt.InvalidTokenError:
         return False
 
-def check_auth_token(auth_header):
+def check_auth_header(auth_header):
     if not auth_header:
         return False
     token = auth_header.split(" ")[1]
@@ -40,3 +39,12 @@ def check_auth_token(auth_header):
     if not token_payload:
         return False
     return token_payload
+
+def check_auth(headers):
+    auth_header = headers.get("Authorization")
+    if not auth_header:
+        return False
+    token_user = check_auth_header(auth_header)
+    if not token_user:
+        return False
+    return token_user

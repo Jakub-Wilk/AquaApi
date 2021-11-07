@@ -30,4 +30,4 @@ def login():
     auth_token = generate_auth_token(username)
     refresh_token = generate_refresh_token(username)
 
-    return success(auth_token, refresh_token)
+    return success(None, auth_token, refresh_token)
